@@ -2,36 +2,44 @@ import React, { Component } from 'react';
 
 import Todo from '../../components/Todo/Todo';
 import TodoDetail from '../../components/TodoDetail/TodoDetail';
+
+//import * as actionTypes from '../../store/action/actionType'
+import { withRouter } from 'react-router';
+
+
 import './TodoList.css';
 
 import { NavLink } from 'react-router-dom';
 
+import { connect } from 'react-redux';
+import axios from 'axios'
+import * as actionCreators from '../../store/action/index';
+
 class TodoList extends Component {
   state = {
-    todos: [
-      { id: 1, title: 'SWPP', content: 'take swpp class', done: true },
-      { id: 2, title: 'Movie', content: 'watch movie', done: false },
-      { id: 3, title: 'Dinner', content: 'eat dinner', done: false }
-    ],
     selectedTodo: null,
   }
 
+  componentDidMount() {
+    axios.get('/api/todo/')
+      .then(result => console.log(result));
+    this.props.onGetAll();
+  }
+
   clickTodoHandler = (td) => {
-    if (this.state.selectedTodo === td) {
-      this.setState({ ...this.state, selectedTodo: null });
-    } else {
-      this.setState({ ...this.state, selectedTodo: td });
-    }
+    this.props.history.push('/todos/' + td.id);
   }
 
   render() {
-    const todos = this.state.todos.map((td) => {
+    const todos = this.props.storedTodos.map((td) => {
       return (
         <Todo
           key={td.id}
           title={td.title}
           done={td.done}
-          clicked={() => this.clickTodoHandler(td)}
+          clickDetail={() => this.clickTodoHandler(td)}
+          clickDone={() => this.props.onToggleTodo(td.id)}
+          clickDelete={() => this.props.onDeleteTodo(td.id)}
         />);
     });
 
@@ -53,4 +61,20 @@ class TodoList extends Component {
   }
 }
 
-export default TodoList;
+const mapDispatchToProps = dispatch => {
+  return {
+    onToggleTodo: (id) =>
+      dispatch(actionCreators.toggleTodo(id)),
+    onDeleteTodo: (id) =>
+      dispatch(actionCreators.deleteTodo(id)),
+    onGetAll: () => dispatch(actionCreators.getTodos()),
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    storedTodos: state.td.todos
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(TodoList)); 
