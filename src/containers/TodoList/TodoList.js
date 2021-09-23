@@ -9,8 +9,13 @@ import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import * as actionTypes from "../../store/actions/actionTypes";
+import axios from "axios";
+import * as actionCreators from "../../store/actions/index";
 
 class TodoList extends Component {
+  componentDidMount() {
+    this.props.onGetAll();
+  }
   state = {
     todos: [
       { id: 1, title: "SWPP", content: "take swpp class", done: true },
@@ -68,8 +73,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onToggleTodo: (id) => dispatch({ type: actionTypes.TOGGLE_DONE, targetID: id }),
-    onDeleteTodo: (id) => dispatch({ type: actionTypes.DELETE_TODO, targetID: id }),
+    onToggleTodo: (id) => dispatch(actionCreators.toggleTodo(id)),
+    onDeleteTodo: (id) => dispatch(actionCreators.deleteTodo(id)),
+    onGetAll: () => dispatch(actionCreators.getTodos()),
   };
 };
 

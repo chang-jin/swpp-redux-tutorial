@@ -6,12 +6,14 @@ import * as serviceWorker from "./serviceWorker";
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import todoReducer from "./store/reducers/todo";
+import { applyMiddleware } from "redux";
+import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({
   td: todoReducer,
 });
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(thunk));
 ReactDOM.render(
   <Provider store={store}>
     <App />
