@@ -1,6 +1,6 @@
 import React from 'react';
 import './RealDetail.css';
-import * as actionTypes from '../../../store/action/actionType';
+import * as actionCreators from '../../../store/action/index';
 import { connect } from 'react-redux';
 
 class RealDetail extends React.Component {
@@ -44,7 +44,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onGetTodo: id => dispatch({ type: actionTypes.GET_TODO, targetID: id })
+    onGetTodo: id => dispatch(actionCreators.getTodo(id))
   }
 }
 
