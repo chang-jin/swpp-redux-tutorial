@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actionTypes from '../../../store/action/actionTypes';
+import * as actionCreators from '../../../store/action/index';
 
 import './NewTodo.css';
 
@@ -12,9 +15,9 @@ class NewTodo extends Component {
   }
 
   postTodoHandler = () => {
-    const data = { title: this.state.title, content: this.state.content };
-    alert('Submitted\n' + data.title + '\n' + data.content);
-    this.setState({ submitted: true });
+    this.props.onStoreTodo(
+      this.state.title,
+      this.state.content);
   }
 
   render() {
@@ -38,4 +41,15 @@ class NewTodo extends Component {
   }
 }
 
-export default NewTodo;
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onStoreTodo: (title, content) =>
+      dispatch(actionCreators.postTodo({
+        title: title, content:
+          content
+      })),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(NewTodo);
