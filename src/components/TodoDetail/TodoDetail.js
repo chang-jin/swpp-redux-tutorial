@@ -4,11 +4,8 @@ import './TodoDetail.css';
 
 class TodoDetail extends React.Component {
   render() {
-    if (this.props.match) {
-      console.log(this.props.match.params.id);
-    }
     return (
-      < div className="TodoDetail" >
+      <div className="TodoDetail" >
         <div className="row">
           <div className="left">
             Name:
@@ -17,7 +14,6 @@ class TodoDetail extends React.Component {
             {this.props.title}
           </div>
         </div>
-
         <div className="row">
           <div className="left">
             Content:
@@ -26,7 +22,7 @@ class TodoDetail extends React.Component {
             {this.props.content}
           </div>
         </div>
-      </div >
+      </div>
     );
   }
 };
