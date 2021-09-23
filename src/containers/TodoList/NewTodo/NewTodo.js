@@ -4,6 +4,9 @@ import { Redirect } from 'react-router-dom';
 
 import './NewTodo.css';
 
+import { connect } from 'react-redux';
+import * as actionTypes from '../../../store/actions/actionTypes';
+
 class NewTodo extends Component {
   state = {
     title: '',
