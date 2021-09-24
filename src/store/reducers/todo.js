@@ -1,4 +1,4 @@
-import * as actionTypes from '../actions/actionTypes';
+import * as actionTypes from '../action/actionTypes';
 
 const initialState = {
     todos: [
@@ -12,8 +12,10 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.ADD_TODO:
             const newTodo = {
-                id: state.todos.length + 1,
-                title: action.title, content: action.content, done:false
+                id: action.id,
+                title: action.title, 
+                content: action.content, 
+                done:action.done
             }
             return {...state, todos: [...state.todos, newTodo]};
         
@@ -34,13 +36,14 @@ const reducer = (state = initialState, action) => {
           return { ...state, todos: modified };
         
         case actionTypes.GET_TODO:
-          const target = state.todos.find(td => td.id === action.targetID);
-          return { ...state, selectedTodo: target };
+          return { ...state, selectedTodo: action.target };
 
+        case actionTypes.GET_ALL:
+          return { ...state, todos:action.todos};
+        
         default:
-            break;
+            return state;
     }
-    return state;
 };
 
 export default reducer;
