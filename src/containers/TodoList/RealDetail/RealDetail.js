@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as actionTypes from '../../../store/actions/actionTypes';
 
+import * as actionCreators from '../../../store/actions/index';
 class RealDetail extends React.Component {
     componentDidMount(){
         this.props.onGetTodo(parseInt(this.props.match.params.id));
@@ -47,7 +48,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onGetTodo: id => 
-            dispatch({ type: actionTypes.GET_TODO, targetID : id})
+        dispatch(actionCreators.getTodo(id)),
     };
 };
 

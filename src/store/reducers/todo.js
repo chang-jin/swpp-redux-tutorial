@@ -36,6 +36,8 @@ const reducer = (state = initialState, action) => {
         case actionTypes.GET_TODO:
             const target = state.todos.find(td => td.id === action.targetID);
             return {...state, selectedTodo: target};
+        case actionTypes.GET_ALL:
+            return {...state, todos: action.todos};
         default:
             break;
     }
