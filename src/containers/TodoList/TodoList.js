@@ -20,7 +20,7 @@ class TodoList extends Component {
   }
 
   clickTodoHandler = (td) => {
-    this.props.history.push(this.props.match.url + td.id);
+    this.props.history.push(this.props.match.url + '/' + td.id);
   }
 
   render() {

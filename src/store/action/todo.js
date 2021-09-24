@@ -23,7 +23,7 @@ export const postTodo = (td) => {
   return (dispatch) => {
     return axios.post('/api/todo/', td)
       .then((res) => dispatch(postTodo_(res.data)))
-      .then(() => dispatch(push('/todos/')));
+      .then(() => dispatch(push('/todos')));
   };
 };
 
