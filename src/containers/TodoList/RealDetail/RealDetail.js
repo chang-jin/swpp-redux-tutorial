@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { connect } from 'react-redux'
-import * as actionTypes from '../../../store/action/actionType'
+import * as actionCreators from '../../../store/action/index'
 
 import './RealDetail.css';
 
@@ -54,7 +54,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onGetTodo: id => dispatch({ type: actionTypes.GET_TODO, targetID: id })
+    onGetTodo: id => dispatch(actionCreators.getTodo(id))
   }
 }
 

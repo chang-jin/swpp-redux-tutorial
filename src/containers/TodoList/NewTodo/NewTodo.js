@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux'
 import * as actionTypes from '../../../store/action/actionType'
+import * as actionCreators from '../../../store/action/index'
 
 import './NewTodo.css';
 
@@ -42,7 +43,7 @@ class NewTodo extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     onStoreTodo: (title, content) => {
-      dispatch({ type: actionTypes.ADD_TODO, title, content })
+      dispatch(actionCreators.postTodo({ title, content }))
     }
   }
 }

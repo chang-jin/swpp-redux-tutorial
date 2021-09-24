@@ -12,18 +12,18 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
 
+    case actionTypes.GET_ALL:
+      return { ...state, todos: action.todos }
     
     case actionTypes.GET_TODO:
-      const target = state.todos.find(td =>
-        td.id === action.targetID)
-      return { ...state, selectedTodo: target }
+      return { ...state, selectedTodo: action.target }
     
     case actionTypes.ADD_TODO:
       const newTodo = {
-        id: state.todos.length + 1,
+        id: action.id,
         title: action.title,
         content: action.content,
-        done: false
+        done: action.done
       }
       return { ...state, todos: [...state.todos, newTodo] }
       
