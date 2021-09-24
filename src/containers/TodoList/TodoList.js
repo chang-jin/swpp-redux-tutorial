@@ -5,8 +5,17 @@ import TodoDetail from '../../components/TodoDetail/TodoDetail';
 import './TodoList.css';
 
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import { withRouter } from 'react-router';
+import * as actionCreators from '../../store/actions/index';
 
 class TodoList extends Component {
+
+  componentDidMount() {
+    this.props.onGetAll();
+  }
+
   state = {
     todos: [
       { id: 1, title: 'SWPP', content: 'take swpp class', done: true },
@@ -17,11 +26,12 @@ class TodoList extends Component {
   }
 
   clickTodoHandler = (td) => {
-    if (this.state.selectedTodo === td) {
-      this.setState({ ...this.state, selectedTodo: null });
-    } else {
-      this.setState({ ...this.state, selectedTodo: td });
-    }
+    this.props.history.push('/todos/ + td.id');
+    // if (this.state.selectedTodo === td) {
+    //   this.setState({ ...this.state, selectedTodo: null });
+    // } else {
+    //   this.setState({ ...this.state, selectedTodo: td });
+    // }
   }
 
   render() {
@@ -32,6 +42,9 @@ class TodoList extends Component {
           title={td.title}
           done={td.done}
           clicked={() => this.clickTodoHandler(td)}
+          clickDetail={() => this.clickTodoHandler(td)}
+          clickDone={() => this.props.onToggleTodo(td.id)}
+          clickDelete={() => this.props.onDeleteTodo(td.id)}
         />);
     });
 
@@ -53,4 +66,19 @@ class TodoList extends Component {
   }
 }
 
-export default TodoList;
+const mapStateToProps = state => {
+  return {
+    storedTodos: state.td.todos
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onToggleTodo: (id) => dispatch(actionCreators.toggleTodo(id)),
+    onDeleteTodo: (id) => dispatch(actionCreators.deleteTodo(id)),
+    onGetAll: () => dispatch(actionCreators.getTodos()),
+    // onGetTodo: (id) => dispatch(actionCreators.getTodo(id)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(TodoList));
