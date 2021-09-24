@@ -1,0 +1,43 @@
+import React from 'react';
+import { connect } from 'react-redux';
+
+import * as actionCreators from '../../../store/action';
+import './RealDetail.css';
+
+class RealDetail extends React.Component {
+  componentDidMount() {
+    this.props.onGetTodo(parseInt(this.props.match.params.id), 10);
+  }
+
+  render() {
+    let title = '';
+    let content = '';
+    if (this.props.selectedTodo) {
+      title = this.props.selectedTodo.title;
+      content = this.props.selectedTodo.content;
+    }
+    return (
+      <div className="RealDetail">
+        <div className="row">
+          <div className="left">Name:</div>
+          <div className="right">{title}</div>
+        </div>
+
+        <div className="row">
+          <div className="left">Content:</div>
+          <div className="right">{content}</div>
+        </div>
+      </div>
+    );
+  }
+};
+
+const mapStateToProps = (state) => ({
+  selectedTodo: state.td.selectedTodo,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onGetTodo: (id) => dispatch(actionCreators.getTodo(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(RealDetail);
