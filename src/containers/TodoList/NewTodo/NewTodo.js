@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
 import { Redirect } from 'react-router-dom';
-
-import './NewTodo.css';
+import { connect } from 'react-redux';
+import * as actionTypes from '../../../store/action/actionType'
+0import './NewTodo.css';
 
 class NewTodo extends Component {
   state = {
