@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
 import { Redirect } from 'react-router-dom';
-
+import { connect } from 'react-redux';
+import * as actionTypes from '../../../store/actions/actionTypes';
 import './NewTodo.css';
 
 class NewTodo extends Component {
@@ -12,8 +13,7 @@ class NewTodo extends Component {
   }
 
   postTodoHandler = () => {
-    const data = { title: this.state.title, content: this.state.content };
-    alert('Submitted\n' + data.title + '\n' + data.content);
+    this.props.onStoreTodo(this.state.title, this.state.content);
     this.setState({ submitted: true });
   }
 
@@ -38,4 +38,11 @@ class NewTodo extends Component {
   }
 }
 
-export default NewTodo;
+const mapDispatchToProps = dispatch => {
+  return {
+    onStoreTodo : (title, content) =>
+      dispatch({ type: actionTypes.ADD_TODO, title: title, content: content})
+  };
+}
+
+export default connect(null, mapDispatchToProps)(NewTodo);
