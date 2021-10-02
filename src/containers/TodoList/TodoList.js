@@ -4,11 +4,9 @@ import Todo from '../../components/Todo/Todo';
 import TodoDetail from '../../components/TodoDetail/TodoDetail';
 import './TodoList.css';
 import { connect } from 'react-redux';
-import * as actionTypes from '../../store/action/actionType';
 import { withRouter } from 'react-router';
 
 import { NavLink } from 'react-router-dom';
-import axios from 'axios';
 import * as actionCreators from '../../store/action/index';
 
 class TodoList extends Component {
